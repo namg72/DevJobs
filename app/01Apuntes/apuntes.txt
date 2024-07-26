@@ -12,6 +12,16 @@
 
 .4 luego modificamos su vista y lo renderizamos en el punto que queramos poniendo en su componente padre --> " <livewire:nombre-componente />"
 
+.5 Validacion campos formulario en liveWire
+
+    Para que se comunique el formulario de la vissta livewire con el backen (el controlador) en los campos el atributo name hay que cambiarlo por wire:model="nombre del modelo"
+
+    Luego en archivo de clase que esta en la caperta livewire en app ponemos la reglas de validación
+
+
+
+
+
 ************************************************* S E E D E E R S *******************************************************************
 
 .1 Creamos un seeder para la bd con este comando:
@@ -87,3 +97,41 @@ Esto hace que podamos utilizar todos lo metodos del ORM Eloquen facilitando las 
 
 
         </select>
+
+
+************************************************* V A L I D A C I O N   D E   F O R M U L A R I O S ***********************************
+
+Con livewrie no hace falta poner la directiva  @csrf ya que por defecto la tiene implementada
+
+1. Para prevenir que nos recarge la pagina en el form poneñmos wire:submit.prevent que equvia al prevent default y le pasamos una
+   funcion que definimos el el archivo de clase
+
+        <form class="mdw-1/2 space-y-5" wire:submit.prevent='crearVacante'>
+
+
+2.- luego la clase del componenete liveWire creamos la función que le pasamos al forn indicamos las reglas de validación
+    la función recoge las reglas de validación que creamos antes y se la asignamos a una variable datos por ej
+
+                 public function crearVacante()
+                    {
+
+                        $datos =  $this->validate();
+                    }
+
+3.- por ultimo en cada input hay que poner la directiva error con el nombre del campo y  dentro
+    o bien pomenos un texto o bien accedemos a la variable message que recoge todos los errores
+    que hemos definido en las rules de la clase
+
+                    @error('titulo')
+                    {{$message}}
+                    @enderror
+
+   ** para reutilzar este componente podemos cerarnos un componente livewire y en su vita 
+      llamar a la variable $message dandole estilos y luego en el fomulario dentro de 
+      @error llamar a este componente paandoele la variable como atrib
+
+                @error('titulo')
+                <livewire:mostrar-alerta :message="$message" />
+                @enderror
+
+        Esta variable la definimos sen la clase y le utilizamos en la vista del componente error
