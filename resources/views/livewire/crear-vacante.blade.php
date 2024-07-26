@@ -77,9 +77,23 @@
         </select>
     </div>
     <div>
-        <x-input-label for="imagen" :value="__('Imagen')" class="uppercase" />
-        <x-text-input id="imagen" class="block mt-1 w-full" type="file" wire:model="descripcion" placeholder="Imagen" />
+        <x-input-label for="imagen" :value="__('Imagen')" />
+        <x-text-input id="imagen" class="block mt-1 w-full" type="file" wire:model="imagen" accept="image/*" />
     </div>
+
+    <div class="my-5 w-1/2 ">
+
+        @if($imagen)
+
+        <img src="{{ $imagen->temporaryUrl() }}">
+        @endif
+    </div>
+
+    @error('imagen')
+
+    <livewire:mostrar-alerta :message="$message" />
+    @enderror
+    </select>
 
     <div>
         <x-primary-button>Crear Vacante</x-primary-button>

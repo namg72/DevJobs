@@ -135,3 +135,25 @@ Con livewrie no hace falta poner la directiva  @csrf ya que por defecto la tiene
                 @enderror
 
         Esta variable la definimos sen la clase y le utilizamos en la vista del componente error
+
+
+    ** para que no nos creee error al subir imanges en el archivo de clase hay que poner:
+              use WithFileUploads;
+       y Validamos el campo imagen ->   'imagen' => 'required|image|max:1024',
+
+        ADemas en la vista en el campo imagen un accet="image/*" para que solo acepte las imagens
+            <x-text-input id="imagen" class="block mt-1 w-full" type="file" wire:model="descripcion" placeholder="Imagen" accept="image/*" />
+
+
+     ** Preview de la imagen a subir:
+
+        LiveWire tiene el metodo temporayUrl que nos permite renderizar un preview antes de subir la imange para ello con una directiva if comprobamos
+        que hemos tenemos una imagen seleccionada y en ese caso la renderizadmos ajustando su tamaño al deseado
+
+               <div class="my-5 w-1/2 ">
+
+                    @if($imagen)
+                    <img src="{{ $imagen->temporaryUrl() }}">
+                    @endif
+                 </div>
+
