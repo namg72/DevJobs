@@ -1,0 +1,89 @@
+
+************************************************* L I V E W I R E *******************************************************************
+
+.1 Instalamos liveWire   -->  "./vendor/bin/sail composer require livewire/livewire"
+
+.2 En en archivo app.  antes de cerrar el head ponemos --> " @livewireStyles", y antes de cerrar el body --> " @livewireScripts"
+
+.3 Creamos componente de livewire  --> "./vendor/bin/sail artisan make:livewire NombreComponente" (la primea en mayuscula y camelCase).
+   Esto noss crea dos archivos: 
+            - la clase que se aloja dentro de la app->Livewire->NombreComponte
+            - la vista que se aloja en app->resource->views->livewire->nombre-componente.blade.php
+
+.4 luego modificamos su vista y lo renderizamos en el punto que queramos poniendo en su componente padre --> " <livewire:nombre-componente />"
+
+************************************************* S E E D E E R S *******************************************************************
+
+.1 Creamos un seeder para la bd con este comando:
+       " ./vendor/bin/sail artisan make:seeder NombreSeeder"
+    Se crea en la carpeta app->database->seeders->NombreSeeder.php
+
+.2 creamos migración de la tabla del seeder:
+
+    " ./vendor/bin/sail artisan make:migration nombre_tabla"
+
+.3 abrimos la nueva migración y modificamos sus campos si es necesario
+
+.4 ejecutaqmos la mibración:
+
+      " ./vendor/bin/sail artisan migrate"
+
+.5 Refenciamos en el DatabaseSeeder el seeder que hemos creado dentro la función run:
+        
+        public function run(): void
+        {
+            $this->call(SalarioSeeder::class);
+        }
+
+.6 ejecutamos el seeders:
+    
+          " ./vendor/bin/sail artisan db:seed"
+
+
+************************************************* M O S T R A N D O  L A  T A B L A  E N  LA V I S T A  L I V E W I R E***********************************
+
+El archivo de clase del componente livewire acuta como controlador. En este caso antes de mostar la vista vamos a consultar la bd
+para traernos los datos de la tablas salarios.
+
+.1 Creamos un modelo:
+        "./vendor/bin/sail artisan make:model Salario"
+
+Esto hace que podamos utilizar todos lo metodos del ORM Eloquen facilitando las consulta a la bd
+
+.2  creamos la consultga dentro la clase livewire generando una variable que lamacena todos los registro del modelo Salario  almacenandola
+    en una variable, y  la incluye como atributo en la vista:
+
+
+        class CrearVacante extends Component
+        {
+            public function render()
+            {
+                //consulta BD para pasarla a la vistga
+
+                $salarios = Salario::all();
+
+
+                return view('livewire.crear-vacante', [
+                    'salarios' => $salarios
+                ]);
+            }
+        }
+
+
+        ** Si solo quisiearamos traerno los datos de un campo en este caso el campo salario de la tabla salarios lo hariamos asi:
+                  "  $salarios = Salario::pluck('salario'); "
+
+
+
+.3 Dengro de la vista de livewire podemos mostar esa consulta. Em este caso lo hemos utilizado en la vista para introducirlos en el select:
+
+         <select class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full"
+            name="salario" id="salario">
+
+            <option value="">-- Selecciona un salario --</option>
+            @foreach ($salarios as $salario )
+            <option value="{{$salario->id}}">{{$salario->salario}}</option>
+            @endforeach
+
+
+        </select>

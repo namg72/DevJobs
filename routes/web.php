@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CrearVacanteeControler;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacanteControler;
@@ -10,6 +11,7 @@ Route::get('/', function () {
 });
 
 Route::get('/vacantes', [VacanteControler::class, 'index'])->middleware(['auth', 'verified'])->name('vacantes.index');
+Route::get('/vacantes/create', [VacanteControler::class, 'create'])->middleware(['auth', 'verified'])->name('vacantes.create');
 
 
 Route::middleware('auth')->group(function () {
