@@ -4,7 +4,9 @@ use App\Http\Controllers\CrearVacanteeControler;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacanteControler;
+use App\Livewire\MostrarVacantes;
 use Illuminate\Support\Facades\Route;
+use Mockery\CountValidator\AtMost;
 
 Route::get('/', function () {
     return view('welcome');
