@@ -157,3 +157,35 @@ Con livewrie no hace falta poner la directiva  @csrf ya que por defecto la tiene
                     @endif
                  </div>
 
+
+************************************************* V I N C U L A R   S T O R A G E   C O N   P U B L I C  ***********************************
+
+
+Los visistantes de la pagina solo tienen acceso a la carpeta public y nosotro guardamos las imagens en la capetea storge. Para que sea visibel entonces las 
+imagens por los usuarioos entonces hay que vincular las dos carpegtas con el siguiente codigo:
+
+                                 ./vendor/bin/sail artisan storage:link
+
+
+
+*********************************************************************** P O L I C Y E S  ************************************************
+
+Si copiamos la url de un usuario autenticado en la pagian de otor usuario autenticado autimaticamente este ultilmo podria verla, no pasaria si el usuario
+no estuvese autenticado. Para evitar esto usamo lo policyes.
+
+1. Primero creamos un policyes y lo asociamo al modelo que quermos ocultar 
+
+        ./vendor/bin/sail artisan make:policy VacantePolicy --model=Vacante
+
+
+BUSCAR INFORMACION DE COMO HACERLO NO ME HA SALIDO
+
+
+*********************************************************************** E V E N T O S  ************************************************
+
+                                    https://laravel-livewire.com/docs/2.x/events
+
+Los eventso de livewire se pueden lanzar desde_
+            La plantilla
+            El componente
+            Desde JavaScript global

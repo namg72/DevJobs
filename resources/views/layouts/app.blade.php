@@ -40,6 +40,13 @@
         </main>
     </div>
     @livewireScripts
+
+    {{-- Despues del los scrips de liveWire podemos añadir scrips personalizados con @stack() con el nombre que
+    quermaso, les mi9sjmo modo se podria hacer con los estilos despues de@livewireStyles--
+    luego en la vista donde lo queramos utilizar con @push lo podemos hacear --}}
+
+    @stack('scripts')
+
 </body>
 
 </html>
