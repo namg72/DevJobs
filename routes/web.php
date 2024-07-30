@@ -15,6 +15,7 @@ Route::get('/', function () {
 Route::get('/vacantes', [VacanteControler::class, 'index'])->middleware(['auth', 'verified'])->name('vacantes.index');
 Route::get('/vacantes/create', [VacanteControler::class, 'create'])->middleware(['auth', 'verified'])->name('vacantes.create');
 Route::get('/vacantes/{vacante}/edit', [VacanteControler::class, 'edit'])->middleware(['auth', 'verified'])->name('vacantes.edit');
+Route::get('/vacantes/{vacante}', [VacanteControler::class, 'show'])->name('vacantes.show');
 
 
 Route::middleware('auth')->group(function () {

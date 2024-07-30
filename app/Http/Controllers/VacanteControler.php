@@ -36,9 +36,10 @@ class VacanteControler extends Controller // Corregir nombre de la clase
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Vacante $vacante)
     {
         // Lógica para mostrar una vacante específica
+        return view();
     }
 
     /**
