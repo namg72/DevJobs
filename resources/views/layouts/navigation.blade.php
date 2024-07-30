@@ -11,7 +11,10 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+                <!-- Navegacion para usuarios autenticados-->
+
+                @auth
+
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('vacantes.index')" :active="request()->routeIs('vacantes.index')">
                         {{ __('Vacantes') }}
@@ -20,10 +23,13 @@
                         {{ __('CrearVacante') }}
                     </x-nav-link>
                 </div>
-            </div>
 
-            <!-- Settings Dropdown -->
+                @endauth
+
+            </div>
+            <!-- Settings Dropdown  solo visible para usuarios autentiados-->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+                @auth
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
@@ -51,12 +57,27 @@
                             @csrf
 
                             <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
-                                                this.closest('form').submit();">
+                                                    this.closest('form').submit();">
                                 {{ __('Cerrar sesión') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
                 </x-dropdown>
+                @endauth
+
+                {{-- navegació para usuarios no autenticados --}}
+                @guest
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('login')">
+                        {{ __('Iniciar sesión') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('register')">
+                        {{ __('Register') }}
+                    </x-nav-link>
+                </div>
+
+                @endguest
             </div>
 
             <!-- Hamburger -->
@@ -77,6 +98,8 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+        @auth
+
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('vacantes.index')" :active="request()->routeIs('vacantes.index')">
                 {{ __('Vacantes') }}
@@ -103,11 +126,25 @@
                     @csrf
 
                     <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
-                                        this.closest('form').submit();">
+                                            this.closest('form').submit();">
                         {{ __('Cerrar sesión') }}
                     </x-responsive-nav-link>
                 </form>
             </div>
         </div>
+
+        @endauth
+
+        {{-- Opciones de menu hamburguea para usuarios no autenticados --}}
+        @guest
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('login')">
+                {{ __('Iniciar sesión') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('register')">
+                {{ __('Crear cuenta') }}
+            </x-responsive-nav-link>
+        </div>
+        @endguest
     </div>
 </nav>

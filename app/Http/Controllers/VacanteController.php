@@ -7,13 +7,14 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate; // Esta línea se ha añadido
 
-class VacanteControler extends Controller // Corregir nombre de la clase
+class VacanteController extends Controller // Corregir nombre de la clase
 {
     /**
      * Display a listing of the resource.
      */
     public function index(): View // Especificar el tipo de retorno View
     {
+        $this->authorize('viewAny', Vacante::class);
         return view('vacantes.index');
     }
 
@@ -22,6 +23,7 @@ class VacanteControler extends Controller // Corregir nombre de la clase
      */
     public function create(): View // Especificar el tipo de retorno View
     {
+        $this->authorize('viewAny', Vacante::class);
         return view('vacantes.create');
     }
 
@@ -39,7 +41,7 @@ class VacanteControler extends Controller // Corregir nombre de la clase
     public function show(Vacante $vacante)
     {
         // Lógica para mostrar una vacante específica
-        return view();
+        return view('vacantes.show', ['vacante' => $vacante]);
     }
 
     /**
@@ -47,9 +49,9 @@ class VacanteControler extends Controller // Corregir nombre de la clase
      */
     public function edit(Vacante $vacante): View
     {
-        /* // Utilizamos el policy, pasándole el método que queremos utilizar y una instancia de la vacante
+        // Utilizamos el policy, pasándole el método que queremos utilizar y una instancia de la vacante
         $this->authorize('update', $vacante);
-        */
+
         return view('vacantes.edit', [
             'vacante' => $vacante
         ]);
