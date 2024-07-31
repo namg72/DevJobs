@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CrearVacanteeControler;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacanteController;
 use App\Livewire\MostrarVacantes;
@@ -16,6 +17,9 @@ Route::get('/vacantes', [VacanteController::class, 'index'])->middleware(['auth'
 Route::get('/vacantes/create', [VacanteController::class, 'create'])->middleware(['auth', 'verified'])->name('vacantes.create');
 Route::get('/vacantes/{vacante}/edit', [VacanteController::class, 'edit'])->middleware(['auth', 'verified'])->name('vacantes.edit');
 Route::get('/vacantes/{vacante}', [VacanteController::class, 'show'])->name('vacantes.show');
+
+//noitificaciones
+Route::get('/notificaciones', NotificacionController::class)->middleware(['auth', 'verified'])->name('notificaciones');
 
 
 Route::middleware('auth')->group(function () {

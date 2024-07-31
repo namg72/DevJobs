@@ -35,4 +35,19 @@ class Vacante extends Model
     {
         return $this->belongsTo(Salario::class);
     }
+
+    // Referenciamos la tabla canddato. Una vacantes puede tener muchos canddatos 
+
+    public function candidatos()
+    {
+        return $this->hasMany((Candidato::class));
+    }
+    // Relacionamos la tabla vacante con usaurio. Una Vacanmte pertence a un usaurio
+
+    public function reclutador()
+    {
+
+        //como hemos llamado reclutador  y no exite ese modelo, a la función tenmos que especificar que va a se el user_id, si llamaramos user no habria que ponerlo
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

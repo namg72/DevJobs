@@ -22,14 +22,31 @@
                     <x-nav-link :href="route('vacantes.create')" :active="request()->routeIs('vacantes.create')">
                         {{ __('CrearVacante') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('notificaciones')" :active="request()->routeIs('notificaciones')">
+                        {{ __('notificaciones') }}
+                    </x-nav-link>
                 </div>
 
                 @endauth
 
             </div>
             <!-- Settings Dropdown  solo visible para usuarios autentiados-->
+
+            {{-- Le mostramos solo a los usuairos recluptadores las notificaciones --}}
+
+
+
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 @auth
+                @if (auth()->user()->rol === 2)
+
+                <a href="{{route('notificaciones')}}"
+                    class="w-7 h-7 bg-indigo-600 hover:border-b-indigo-800  rounded-full  flex flex-col justify-center   items-center text-sm font-bold text-white font-bold">
+
+                    {{auth()->user()->unreadNotifications->count()}}
+                </a>
+
+                @endif
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
@@ -107,9 +124,26 @@
             <x-responsive-nav-link :href="route('vacantes.create')" :active="request()->routeIs('vacantes.create')">
                 {{ __('CrearVacante') }}
             </x-responsive-nav-link>
+            <div class="flex justify-between items-center">
+
+                <x-responsive-nav-link :href="route('notificaciones')" :active="request()->routeIs('notificaciones')">
+                    {{ __('Notificaciones') }}
+                </x-responsive-nav-link>
+                @if (auth()->user()->rol === 2)
+
+                <a href="{{route('notificaciones')}}"
+                    class=" mr-4 w-7 h-7 bg-indigo-600 hover:border-b-indigo-800  rounded-full  flex flex-col justify-center   items-center text-sm font-bold text-white font-bold">
+
+                    {{auth()->user()->unreadNotifications->count()}}
+                </a>
+            </div>
         </div>
 
         <!-- Responsive Settings Options -->
+
+
+
+        @endif
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
                 <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>

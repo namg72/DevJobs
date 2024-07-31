@@ -1,0 +1,58 @@
+                                N  O  T  I  F  I  C  A  C  I  O  N  E  S
+
+Laravael soporta notificaciones en la pagina web, email o sms(api de pago)
+
+**  CREACION DE NOTIFICACION   
+
+    ./vendor/bin/sail artisan make:notification NombreNotificacion
+
+**  ALMACENAMIENTO DE LAS NOTIFICAICONES   
+
+    Se almacenan en: APP/Notificactions
+
+**  COMPORTAMIENTO DE LA NOTIFICACION
+
+    .- Los datos se le pasan en el constructo al instaciar esta notificación
+
+    .- Creamos la funcion toDatabase para almacenar en la base de datos las notificaones en la tabla que creamos al respecto
+
+    .- En este ejercicio vamos a mandar una notificaion cuando el postulante se inscribe en una oferta y esta le llega al reclutador que la publico, por lo que en en el modelo de Vacante
+       tenemos que vincular la vacante con 
+
+    .- Em la funcion 'via' le indicameos que le va a llegar por mail y se va a lamacenr en la bd 
+
+                    public function via(object $notifiable): array
+                    {
+                        return ['mail', 'database'];
+                    }
+
+**  INSTACIA DE LA NOTIFICACION
+    
+    .- se instancia con el metodo notify pasandole como argumento la notificacion creada con sus parametros requerios en su constuctor
+
+            $this->vacante->reclutador->notify(new NuevoCandidato($this->vacante->id, $this->vacante->titulo, auth()->user()->id ));
+
+
+**  CREANDO LOS METODO DE LA NOTIFICACION
+
+    .- En la funcion toDatabase que creamos retornamos un objeto con los datos que recibimos en el constructo que se le mostraran a la persona notificada
+       Este objeto se guarda en el campo data de la tabla notificaciones
+
+    .- En la funcion toEmail definimos el mensaje
+       
+        En ->Line, podemnos poner las linea de texto que quermos que reciba el notiicado
+        En ->action, le ponemos el texto al boton y la url donde quermos que no lleve para ver las notificaciones ques un endepoint que creamos 
+
+
+
+** COMPROBAR EL CORREO
+
+    .- Estamos utilzando Mailpit para simular el envio de correos lo podemos ver en localhost:8025
+
+
+** CONTROLADOR Y reclutador
+  
+    .- Creamos un endpoint para ver las notificaciones, para ello cramos un contrador con la bandaea invokable
+          ./vendor/bin/sail artisan make:controller NotificacionController --invokable
+       Esto nos crea un solo metdodo donde vamos a renderizar las notificaciones y en la ruta solo hay que indicarles 
+       NoficaiconnController:class sin indicar el metodo ya que lo toma por defecto al ser solo uno
