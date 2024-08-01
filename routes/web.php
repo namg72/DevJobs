@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CandidatoController;
 use App\Http\Controllers\CrearVacanteeControler;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificacionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacanteController;
@@ -9,17 +11,19 @@ use App\Livewire\MostrarVacantes;
 use Illuminate\Support\Facades\Route;
 use Mockery\CountValidator\AtMost;
 
-Route::get('/', function () {
+/* Route::get('/', function () {
     return view('welcome');
-});
+})->name('home'); */
 
-Route::get('/vacantes', [VacanteController::class, 'index'])->middleware(['auth', 'verified'])->name('vacantes.index');
+Route::get('/home', HomeController::class)->name('home');
+Route::get('/vacantes', [VacanteController::class, 'index'])->middleware(['auth', 'verified', 'rol.reclutador'])->name('vacantes.index');
 Route::get('/vacantes/create', [VacanteController::class, 'create'])->middleware(['auth', 'verified'])->name('vacantes.create');
 Route::get('/vacantes/{vacante}/edit', [VacanteController::class, 'edit'])->middleware(['auth', 'verified'])->name('vacantes.edit');
 Route::get('/vacantes/{vacante}', [VacanteController::class, 'show'])->name('vacantes.show');
+Route::get('/candidatos/{vacante}', [CandidatoController::class, 'index'])->name('candidatos.index');
 
 //noitificaciones
-Route::get('/notificaciones', NotificacionController::class)->middleware(['auth', 'verified'])->name('notificaciones');
+Route::get('/notificaciones', NotificacionController::class)->middleware(['auth', 'verified', 'rol.reclutador'])->name('notificaciones');
 
 
 Route::middleware('auth')->group(function () {

@@ -11,20 +11,28 @@
                     </a>
                 </div>
 
-                <!-- Navegacion para usuarios autenticados-->
+                <!-- Navegacion para usuarios autenticados y solo visible para rol reclutador-->
 
-                @auth
+
+
 
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                        {{ __('Home') }}
+                    </x-nav-link>
+                    @auth
+                    @if (auth()->user()->rol === 2)
                     <x-nav-link :href="route('vacantes.index')" :active="request()->routeIs('vacantes.index')">
                         {{ __('Vacantes') }}
                     </x-nav-link>
                     <x-nav-link :href="route('vacantes.create')" :active="request()->routeIs('vacantes.create')">
                         {{ __('CrearVacante') }}
                     </x-nav-link>
+
                     <x-nav-link :href="route('notificaciones')" :active="request()->routeIs('notificaciones')">
                         {{ __('notificaciones') }}
                     </x-nav-link>
+                    @endif
                 </div>
 
                 @endauth
@@ -113,11 +121,15 @@
         </div>
     </div>
 
-    <!-- Responsive Navigation Menu -->
+    <!-- Responsive Navigation Menu solo visible para usuario autenticados y con roll reclutador -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         @auth
 
         <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                {{ __('Home') }}
+            </x-responsive-nav-link>
+            @if ((auth()->user()->rol === 2))
             <x-responsive-nav-link :href="route('vacantes.index')" :active="request()->routeIs('vacantes.index')">
                 {{ __('Vacantes') }}
             </x-responsive-nav-link>
@@ -136,6 +148,8 @@
 
                     {{auth()->user()->unreadNotifications->count()}}
                 </a>
+
+                @endif
             </div>
         </div>
 

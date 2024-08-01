@@ -1,0 +1,18 @@
+                                                 M  I  D  D  L  E  W  A  R  E     P  E  R  S  O  N  A  L  I  Z  A  D  O  S
+
+
+** CREACION
+        
+           ./vendor/bin/sail artisan make:middleware NombreMiddleware
+    
+    Después de crearlo hay que registrarlo en Laravel para que sepa de su existencia
+    En Laravel <11 se registra en kernel.php que esta dentro de app/http o bien en una carpeta en app
+    En Laravel 11 haty que ir a app/boostrap/app.php y registrarlo dentro de:
+              ->withMiddleware(function (Middleware $middleware) {})
+
+    Le podemos crear alias y colocar dentro nuestros middleware
+                  ->withMiddleware(function (Middleware $middleware) {
+                        $middleware->alias([
+                            'rol' => RolUsuario::class,
+                        ]);
+                     })

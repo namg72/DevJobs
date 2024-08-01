@@ -40,7 +40,7 @@ class Vacante extends Model
 
     public function candidatos()
     {
-        return $this->hasMany((Candidato::class));
+        return $this->hasMany((Candidato::class))->orderBy('created_at', 'DESC');
     }
     // Relacionamos la tabla vacante con usaurio. Una Vacanmte pertence a un usaurio
 
